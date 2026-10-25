@@ -5,72 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Оливия</title>
 <style>
-  body { font-family: Georgia, serif; background: #faf7f2; color: #333;
-         display: flex; flex-direction: column; align-items: center;
-         margin: 0; padding: 40px 20px; }
-  .card { max-width: 600px; text-align: center; }
-  img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
-  h1 { font-size: 2em; margin: 24px 0 8px; }
-  p { font-size: 1.1em; color: #666; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: Arial, sans-serif;
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  background:#f5f6fa;
+}
+.card {
+  background:#fff; border-radius:20px; padding:40px;
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+  text-align:center; max-width:380px; width:90%;
+}
+.photo {
+  width:180px; height:180px; border-radius:50%;
+  object-fit:cover; margin-bottom:20px;
+}
+h1 { font-size:28px; color:#333; margin-bottom:8px; }
+.subtitle { color:#777; font-size:16px; margin-bottom:24px; }
+.contact-btn {
+  background:#764ba2; color:#fff; border:none;
+  padding:12px 28px; border-radius:25px;
+  font-size:16px; cursor:pointer;
+}
+.contact-btn:hover { background:#5a3a7d; }
+#feedbackForm { margin-top:20px; text-align:left; }
+#feedbackForm label { display:block; font-size:14px; color:#555; margin-bottom:4px; }
+#feedbackForm input, #feedbackForm textarea {
+  width:100%; padding:10px; margin-bottom:14px;
+  border:1px solid #ccc; border-radius:8px; font-size:14px;
+}
+#feedbackForm textarea { height:100px; resize:vertical; }
+#feedbackForm button {
+  width:auto; padding:12px 28px; background:#764ba2;
+  color:#fff; border:none; border-radius:25px;
+  font-size:16px; cursor:pointer;
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <img src="olivia.jpg" alt="Оливия">
-  <h1>Оливия</h1>
-  <p>Студентка 1 курса РУДН.</p>
-<button id="writeBtn">✉️ Написать мне</button>
 
-<form id="feedbackForm" style="display:none"
-      action="https://formspree.io/f/mwllvzzb" method="POST">
-  <p>
-    <label>Ваше имя *<br>
+<div class="card">
+  <img src="olivia.jpg" alt="Оливия" class="photo">
+  <h1>Оливия</h1>
+  <p class="subtitle">Студентка 1 курса РУДН</p>
+
+  <!-- Кнопка НАХОДИТСЯ ВНЕ формы -->
+  <button id="contactBtn" class="contact-btn">✉️ Написать мне</button>
+
+  <!-- Форма скрыта по умолчанию -->
+  <form id="feedbackForm" action="https://formspree.io/f/mw1lvzzb" method="POST" style="display:none">
+    <label>Ваше имя *
       <input type="text" name="name" required>
     </label>
-  </p>
-  <p>
-    <label>Ваш email *<br>
+    <label>Ваш email *
       <input type="email" name="email" required>
     </label>
-  </p>
-  <p>
-    <label>Сообщение<br>
-      <textarea name="message" rows="4"></textarea>
+    <label>Сообщение
+      <textarea name="message"></textarea>
     </label>
-  </p>
-  <button type="submit">Отправить</button>
-</form>
+    <button type="submit">Отправить</button>
+  </form>
+</div>
 
 <script>
-  document.getElementById('writeBtn').addEventListener('click', function () {
-    var f = document.getElementById('feedbackForm');
-    f.style.display = f.style.display === 'none' ? 'block' : 'none';
-  });
-</script>
-</div>
-  <script>
-document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+const form = document.getElementById('feedbackForm');
+const btn = document.getElementById('contactBtn');
+
+// Клик по кнопке «Написать мне»: показать форму, спрятать кнопку
+btn.addEventListener('click', function() {
+  form.style.display = 'block';
+  btn.style.display = 'none';
+});
+
+// Отправка без перехода на страницу Formspree
+form.addEventListener('submit', async function(e) {
   e.preventDefault();
-  var form = this;
-  fetch(form.action, {
-    method: 'POST',
-    body: new FormData(form),
-    headers: { 'Accept': 'application/json' }
-  }).then(response => {
-  if (response.ok) {
-    alert('Спасибо! Сообщение отправлено.');
-    location.reload();
-  } else {
-    alert('Не удалось отправить сообщение.');
-  }
-})
+  try {
+    const response = await fetch(form.action, {
+      method:'POST',
+      body:new FormData(form),
+      headers:{'Accept':'application/json'}
+    });
+    if (response.ok) {
+      alert('Спасибо! Сообщение отправлено.');
+      form.reset();
+      form.style.display = 'none';
+      btn.style.display = 'inline-block';
     } else {
       alert('Не удалось отправить сообщение.');
     }
-  }).catch(function() {
+  } catch (err) {
     alert('Не удалось отправить сообщение.');
-  });
+  }
 });
 </script>
+
 </body>
 </html>
