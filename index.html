@@ -57,13 +57,12 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     body: new FormData(form),
     headers: { 'Accept': 'application/json' }
   }).then(response => {
-  if (response.ok) {
-    form.reset();
-    form.style.display = 'none';
-    alert('Спасибо! Сообщение отправлено.');
-  } else {
-    alert('Не удалось отправить сообщение.');
-  }
+  if (response.ok) {
+    alert('Спасибо! Сообщение отправлено.');
+    location.reload();
+  } else {
+    alert('Не удалось отправить сообщение.');
+  }
 })
     } else {
       alert('Не удалось отправить сообщение.');
