@@ -18,7 +18,7 @@
 <div class="card">
   <img src="olivia.jpg" alt="Оливия">
   <h1>Оливия</h1>
-  <p>Студентка 1 курса РУДН</p>
+  <p>Студентка 1 курса РУДН.</p>
 <button id="writeBtn">✉️ Написать мне</button>
 
 <form id="feedbackForm" style="display:none"
@@ -56,10 +56,15 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     method: 'POST',
     body: new FormData(form),
     headers: { 'Accept': 'application/json' }
-  }).then(function(response) {
-    if (response.ok) {
-      form.reset();
-      alert('Спасибо! Сообщение отправлено.');
+  }).then(response => {
+  if (response.ok) {
+    form.reset();
+    form.style.display = 'none';
+    alert('Спасибо! Сообщение отправлено.');
+  } else {
+    alert('Не удалось отправить сообщение.');
+  }
+})
     } else {
       alert('Не удалось отправить сообщение.');
     }
