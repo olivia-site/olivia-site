@@ -5,20 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Оливия</title>
 <style>
-  body { font-family: Georgia, serif; background: #faf7f2; color: #333;
-         display: flex; flex-direction: column; align-items: center;
-         margin: 0; padding: 40px 20px; }
-  .card { max-width: 600px; text-align: center; }
-  img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
-  h1 { font-size: 2em; margin: 24px 0 8px; }
-  p { font-size: 1.1em; color: #666; }
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: #faf7f2;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .card {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
+    display: block;
+    margin: 0 auto;
+    background: #eee; /* заглушка, пока грузится */
+  }
+
+  h1 {
+    font-size: clamp(1.6em, 5vw, 2em);
+    line-height: 1.2;
+    margin: 24px 0 8px;
+  }
+
+  p {
+    font-size: 1.1em;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Если картинки нет — покажем аккуратную заглушку */
+  .card img.error {
+    min-height: 200px;
+    object-fit: contain;
+    background: #f0ebe3;
+  }
 </style>
 </head>
 <body>
-<div class="card">
-  <img src="olivia.jpg" alt="Оливия">
-  <h1>Оливия</h1>
-  <p>Студентка 1 курса РУДН</p>
-</div>
+<main class="card">
+  <img src="olivia.jpg" alt="Оливия"
+       onerror="this.classList.add('error'); this.alt='Фото Оливии не найдено';">
+  <h1>Оливия</h1>
+  <p>Студентка 1 курса РУДН</p>
+</main>
 </body>
 </html>
