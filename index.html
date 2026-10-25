@@ -1,76 +1,86 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Оливия</title>
-<style>
-  body { font-family: Georgia, serif; background: #faf7f2; color: #333;
-         display: flex; flex-direction: column; align-items: center;
-         margin: 0; padding: 40px 20px; }
-  .card { max-width: 600px; text-align: center; }
-  img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
-  h1 { font-size: 2em; margin: 24px 0 8px; }
-  p { font-size: 1.1em; color: #666; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оливия</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .profile-photo {
+      width: 200px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    .contact-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #contactForm {
+      max-width: 400px;
+      margin: 20px auto;
+      text-align: left;
+    }
+    #contactForm input, #contactForm textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 <body>
-<div class="card">
-  <img src="olivia.jpg" alt="Оливия">
+
   <h1>Оливия</h1>
-  <p>Студентка 1 курса РУДН</p>
-<button id="writeBtn">✉️ Написать мне</button>
+  <p>Студентка 1 курса РУДН.</p>
 
-<form id="feedbackForm" style="display:none"
-      action="https://formspree.io/f/mwllvzzb" method="POST">
-  <p>
-    <label>Ваше имя *<br>
-      <input type="text" name="name" required>
-    </label>
-  </p>
-  <p>
-    <label>Ваш email *<br>
-      <input type="email" name="email" required>
-    </label>
-  </p>
-  <p>
-    <label>Сообщение<br>
-      <textarea name="message" rows="4"></textarea>
-    </label>
-  </p>
-  <button type="submit">Отправить</button>
-</form>
+  <img class="profile-photo" src="olivia.jpg" alt="Оливия">
 
-<script>
-  document.getElementById('writeBtn').addEventListener('click', function () {
-    var f = document.getElementById('feedbackForm');
-    f.style.display = f.style.display === 'none' ? 'block' : 'none';
-  });
-</script>
-</div>
+  <button class="contact-btn" id="contactBtn" onclick="toggleForm()">✉️ Написать мне</button>
+
+  <form id="contactForm" action="https://formspree.io/f/ВАШ_КОД" method="POST" style="display:none;">
+    <input type="text" name="name" placeholder="Ваше имя *" required>
+    <input type="email" name="email" placeholder="Ваш email *" required>
+    <textarea name="message" placeholder="Сообщение" rows="5"></textarea>
+    <button type="submit">Отправить</button>
+  </form>
+
   <script>
-document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var form = this;
-  fetch(form.action, {
-    method: 'POST',
-    body: new FormData(form),
-    headers: { 'Accept': 'application/json' }
-  }).then(response => {
-  if (response.ok) {
-    alert('Спасибо! Сообщение отправлено.');
-    location.reload();
-  } else {
-    alert('Не удалось отправить сообщение.');
-  }
-})
-    } else {
-      alert('Не удалось отправить сообщение.');
+    function toggleForm() {
+      var form = document.getElementById('contactForm');
+      var btn = document.getElementById('contactBtn');
+      if (form.style.display === 'none') {
+        form.style.display = 'block';
+        btn.textContent = 'Скрыть';
+      } else {
+        form.style.display = 'none';
+        btn.textContent = '✉️ Написать мне';
+      }
     }
-  }).catch(function() {
-    alert('Не удалось отправить сообщение.');
-  });
-});
-</script>
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(response) {
+        if (response.ok) {
+          alert('Спасибо! Сообщение отправлено.');
+          location.reload();
+        } else {
+          alert('Не удалось отправить сообщение.');
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
