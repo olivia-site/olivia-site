@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Оливия</title>
+
+<!-- SEO -->
+<meta name="description" content="Оливия — студентка 1 курса РУДН. Написать мне можно через форму обратной связи на странице.">
+
+<!-- Open Graph: превью ссылки в Telegram / WhatsApp -->
+<meta property="og:title" content="Оливия">
+<meta property="og:description" content="Студентка 1 курса РУДН">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="olivia.jpg">
+
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23764ba2'/%3E%3Ctext x='50' y='72' font-size='62' font-family='Arial' font-weight='bold' fill='%23fff' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
+
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
@@ -21,10 +34,10 @@ body {
 .photo {
   display:block;
   margin:0 auto;
-  width:min(340px, 90%) important;
-  height:auto; important;
-  max-height: 70vh;
-  object-fit: cover;
+  width:min(340px,90%);
+  height:auto;
+  max-height:70vh;
+  object-fit:cover;
 }
 h1 { font-size:28px; color:#333; margin-bottom:8px; }
 .subtitle { color:#777; font-size:16px; margin-bottom:24px; }
@@ -32,17 +45,6 @@ h1 { font-size:28px; color:#333; margin-bottom:8px; }
   background:#764ba2; color:#fff; border:none;
   padding:12px 28px; border-radius:25px;
   font-size:16px; cursor:pointer;
-}
-  @media (max-width: 600px) {
-    .card {
-        width: 90%;
-        padding: 20px;
-        margin: 0 auto;
-    }
-    .photo {
-        width: 100%;
-        max-height: 50vh;
-    }
 }
 .contact-btn:hover { background:#5a3a7d; }
 #feedbackForm { margin-top:20px; text-align:left; }
@@ -57,6 +59,12 @@ h1 { font-size:28px; color:#333; margin-bottom:8px; }
   color:#fff; border:none; border-radius:25px;
   font-size:16px; cursor:pointer;
 }
+
+/* Мобильная версия */
+@media (max-width:600px) {
+  .card { width:90%; padding:20px; margin:0 auto; }
+  .photo { width:100%; max-height:50vh; }
+}
 </style>
 </head>
 <body>
@@ -64,14 +72,12 @@ h1 { font-size:28px; color:#333; margin-bottom:8px; }
 <div class="card">
   <img src="olivia.jpg" alt="Оливия" class="photo">
   <h1>Оливия</h1>
-  <p class="subtitle">Студентка 1 курса РУДН.</p>
+  <p class="subtitle">Студентка 1 курса РУДН</p>
 
-  <!-- Кнопка находится ВНЕ формы -->
+  <!-- Кнопка для открытия формы -->
   <button id="contactBtn" class="contact-btn">✉️ Написать мне</button>
 
-  <!-- Форма скрыта по умолчанию -->
-  <!-- ВАЖНО: если адрес из кабинета Formspree другой,
-       замени mw1lvzzb на свои символы после /f/ -->
+  <!-- Форма обратной связи (Formspree) -->
   <form id="feedbackForm" action="https://formspree.io/f/mwllvzzb" method="POST" style="display:none">
     <label>Ваше имя *
       <input type="text" name="name" required>
@@ -90,13 +96,13 @@ h1 { font-size:28px; color:#333; margin-bottom:8px; }
 const form = document.getElementById('feedbackForm');
 const btn = document.getElementById('contactBtn');
 
-// Клик по кнопке «Написать мне»: показать форму, спрятать кнопку
+// Клик по кнопке «Написать мне»: прячем кнопку, показываем форму
 btn.addEventListener('click', function() {
   form.style.display = 'block';
   btn.style.display = 'none';
 });
 
-// Отправка без перехода на страницу Formspree
+// Отправка данных напрямую на сторонний сервис Formspree
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
   try {
@@ -113,9 +119,9 @@ form.addEventListener('submit', async function(e) {
     } else {
       alert('Не удалось отправить сообщение.');
     }
-  } catch (err) {
-    alert('Не удалось отправить сообщение.');
-  }
+    } catch (err) {
+      alert('Не удалось отправить сообщение.');
+    }
 });
 </script>
 
